@@ -1,0 +1,68 @@
+const organization=[{
+  id:'1',
+  text:'天津邮政',
+  isLeaf:false,
+  children:[{
+    id:'1-1',
+    text:'中通',
+    isLeaf:true,
+  },{
+    id:'1-2',
+    text:'申通',
+    isLeaf:true,
+  },{
+    id:'1-3',
+    text:'圆通',
+    isLeaf:true,
+  },{
+    id:'1-4',
+    text:'韵达',
+    isLeaf:true,
+  },{
+    id:'1-5',
+    text:'邮政',
+    isLeaf:true,
+  },{
+    id:'1-6',
+    text:'汇通',
+    isLeaf:true,
+  }],
+},{
+  id:'2',
+  text:'组织2',
+  isLeaf:true,
+},{
+  id:'3',
+  text:'组织3',
+  isLeaf:false,
+  children:[{
+    id:'3-1',
+    text:'组织3-1',
+    isLeaf:true,
+  },{
+    id:'3-2',
+    text:'组织3-2',
+    isLeaf:false,
+    children:[{
+      id:'3-2-1',
+      text:'组织3-2-1',
+      isLeaf:true,
+    }],
+  }],
+},{
+  id:'4',
+  text:'组织4',
+  isLeaf:true,
+},{
+  id:'5',
+  text:'组织4',
+  isLeaf:true,
+},{
+  id:'6',
+  text:'组织4',
+  isLeaf:true,
+},]
+
+export default {
+  'GET /api/organizationManage/getOrganization': organization,
+};

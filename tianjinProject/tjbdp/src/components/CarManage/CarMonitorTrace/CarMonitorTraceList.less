@@ -1,0 +1,46 @@
+.selectList{
+
+	.searchRow{
+		margin-bottom:12px;
+
+		.searchWidth{
+			width:100%;
+			border-top-right-radius: 0;
+	  		border-bottom-right-radius: 0;
+	  		:global{
+	  			.ant-select-selection--single{
+	  				border-top-right-radius: 0;
+	  				border-bottom-right-radius: 0;
+	  			}
+	  		}
+		}
+
+		.searchBtn{
+			width:100%;
+			border-top-left-radius: 0;
+	  		border-bottom-left-radius: 0;
+		}
+	}
+
+	.carMonitorList{
+		max-height:90vh;
+		overflow-y:auto;
+		//span{
+		//	width:30px;
+		//
+		//}
+
+		:global{
+			.ant-list-item-main{
+				word-wrap:break-word;
+				//margin-left:8px;
+				text-overflow:ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+			.ant-list-item-extra{
+				//margin-left:36px;
+			}
+		}
+	}
+}
