@@ -4,6 +4,7 @@
         <h2><span>{{date}}</span><span>{{week}}</span><span>{{time}}</span></h2>
         <!-- <a v-if="!isIndex" href="javascript:;"></a> -->
         <router-link v-if="!isIndex" to="/"></router-link>
+        <div></div>
     </div>
 </template>
 <script>
