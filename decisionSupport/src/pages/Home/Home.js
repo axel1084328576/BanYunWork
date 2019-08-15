@@ -7,7 +7,7 @@ import geoJson from 'echarts/map/json/china.json'
 import { geoCoordMap, provienceData } from './geo.js'
 
 import { numberToShow } from '@/utils/numberUtils'
-import FTips from '@/components/home/FTipsComponent.js'
+import FTips from '@/components/Home/FTipsComponent.js'
 
 import homeStyle from './home.css'
 // 主屏

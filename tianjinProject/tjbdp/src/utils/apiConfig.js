@@ -6,12 +6,12 @@
 // const host="http://192.168.96.91:8901";
 // const host = "http://111.160.20.248:8090/maildatav1";
 // const host="11.160.20.248:8090/maildatav1";
-const host="http://10.10.75.147:9001/maildatav";
+// const host="http://10.10.75.147:9001/maildatav";
 /**
  *正式
  * */
 // const host="http://111.160.20.248:8090/maildatav";
-
+const host = "http://111.160.20.248:8089/maildatav";
 /**
  *临时
  * */
