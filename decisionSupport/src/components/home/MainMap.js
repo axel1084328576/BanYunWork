@@ -14,7 +14,7 @@ class MainMap extends React.Component{
 
     render(){
         return(
-            
+          <div id="mainMap" style={{ height: '100%' }} />
         );
     }
 }
