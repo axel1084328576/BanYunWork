@@ -8,6 +8,9 @@ import logo from '../assets/logo.svg';
 class welcomeComponent extends Component {
 
     render() {
+
+        console.log(styles.title)
+
         return (
             <div>
                 <h1 className={styles.title}>天津市邮政管理局电商与快递信息公益性服务平台</h1>

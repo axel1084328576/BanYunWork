@@ -1,0 +1,86 @@
+@import '~antd/lib/style/themes/default.less';
+
+.content {
+  //margin: 24px;
+  padding-top: @layout-header-height;
+  height:calc(100vh - @layout-header-height - 20px)
+}
+
+:global {
+  @font-face {
+    font-family: 'iconfont';  /* project id 1160003 */
+    src: url('//at.alicdn.com/t/font_1160003_y2scqssvpba.eot');
+    src: url('//at.alicdn.com/t/font_1160003_y2scqssvpba.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_1160003_y2scqssvpba.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_1160003_y2scqssvpba.woff') format('woff'),
+    url('//at.alicdn.com/t/font_1160003_y2scqssvpba.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_1160003_y2scqssvpba.svg#iconfont') format('svg');
+  }
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 18px;
+    font-style: normal;
+    color:#000;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .ant-form-item-label{
+    line-height:1px;
+  }
+
+  .ant-layout-header{
+    background:rgba(255,255,255,0);
+  }
+
+  .ant-layout-sider{
+    background:#2D3033
+  }
+
+  .ant-menu-dark, .ant-menu-dark .ant-menu-sub{
+    background:#2D3033
+  }
+
+  .ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected{
+    background: #25282B;
+    a:hover{
+      color:#40A9FF
+    }
+  }
+
+
+  .antd-pro-components-top-nav-header-index-logo{
+    width:185px;
+  }
+  //.ant-menu-item>
+
+  img{
+    border-radius:5px
+  }
+
+  .ant-tooltip{
+    max-width: 400px;
+    background-color:#fff;
+    color:#000;
+  }
+  .ant-tooltip-inner{
+    background-color: white;
+    color:#000;
+    min-width:auto;
+    padding-bottom:0.5px;
+  }
+  .ant-tooltip-placement-top .ant-tooltip-arrow{
+    border-top-color: #FFFFFF;
+  }
+}
+
+:global{
+  .ant-layout{
+    //background-color: rgba(255,255,255,0);
+    background:url("../assets/background.jpg");
+  }
+  .ant-menu{
+    color:#fff;
+    background-color: rgba(255,255,255,0);
+  }
+}

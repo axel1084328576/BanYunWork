@@ -6,7 +6,7 @@
 // const host="http://192.168.96.91:8901";
 // const host = "http://111.160.20.248:8090/maildatav1";
 // const host="11.160.20.248:8090/maildatav1";
-const host="http://10.10.75.140:8089/maildatav";
+const host="http://10.10.75.147:9001/maildatav";
 /**
  *正式
  * */
@@ -130,7 +130,8 @@ const mailUpload = "/mail/mailbox/importmailbox";
 const boxAddOrEdit = "/mail/expressbox/saveexpressbox";
 const boxDel = "/mail/expressbox/delexpressbox";
 const boxSelect = "/mail/expressbox/info";
-const boxList = "/mail/expressbox/list";
+// const boxList = "/mail/expressbox/list";
+const boxList = "/mail/expressbox/listPostexpresscabinet";
 const boxUpload = "/mail/expressbox/importexpressbox";
 
 
@@ -194,9 +195,9 @@ const jdqImport = "/jdqynl/importmd";
 const sortNet = "/mail/workstation/networktype";
 
 //快件箱管理-投递信息
-const send = "/mail/expressbox/send";
+const send = "/mail/expressbox/listPostExpressBox";
 //快件箱管理-取件信息
-const pickup = "/mail/expressbox/pickup";
+const pickup = "/mail/expressbox/listPostsendinfo";
 
 //星级评定
 const starList = "/star/list";

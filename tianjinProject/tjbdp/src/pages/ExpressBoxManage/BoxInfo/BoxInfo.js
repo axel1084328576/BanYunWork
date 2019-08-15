@@ -1,5 +1,5 @@
 //危化品名录
-import React,{Component} from 'react'
+import React, { Component } from 'react'
 import { Divider, Popconfirm, Table, Card, Row, Col, Input, Form, Button, Select, Icon } from "antd";
 import { connect } from "dva";
 import styles from "./BoxInfo.less";
@@ -7,180 +7,271 @@ import AddModal from '../../../components/ExpressBoxManage/BoxInfo/AddModal';
 import EditModal from '../../../components/ExpressBoxManage/BoxInfo/EditModal';
 import ImportModal from '../../../components/ExpressBoxManage/BoxInfo/ImportModal';
 
-@connect(({ expressBox,expressBoxManage,getPagePage,loading }) => {
-  const {expressBoxList,pageSize,total,page,}=expressBox;
-  const {controlList}=expressBoxManage;
-  const {pagePath}=getPagePage;
-  return{
-    expressBoxList,pageSize,total,controlList,page,pagePath,
+@connect(({ expressBox, expressBoxManage, getPagePage, loading }) => {
+  const { expressBoxList, pageSize, total, page, } = expressBox;
+  const { controlList } = expressBoxManage;
+  const { pagePath } = getPagePage;
+  return {
+    expressBoxList, pageSize, total, controlList, page, pagePath,
     cheLoading: loading.effects['expressBox/List'],
   }
 })
 
 @Form.create()
-export default class BoxInfo extends Component{
-  state={
-    addVisible:false,
-    editVisible:false,
-    importVisible:false,
-    rowData:{},
-    columns:[
+export default class BoxInfo extends Component {
+  state = {
+    addVisible: false,
+    editVisible: false,
+    importVisible: false,
+    rowData: {},
+    columns: [
+      // {
+      //   title: "企业编号",
+      //   dataIndex: "compNo",
+      //   key: "compNo",
+      //   // width:100,
+      // },
+      // {
+      //   title: "企业名称",
+      //   dataIndex: "compNa",
+      //   key: "compNa",
+      //   // width:100,
+      // },
+      // {
+      //   title: "编号",
+      //   dataIndex: "boxNo",
+      //   key: "boxNo",
+      //   // width:100,
+      // },
+      // {
+      //   title: "名称",
+      //   dataIndex: "boxName",
+      //   key: "boxName",
+      //   // width:100,
+      // },{
+      //   title: "地址",
+      //   dataIndex: "address",
+      //   key: "address",
+      //   // width:100,
+      // }, {
+      //   title:"经纬度",
+      //   children: [{
+      //     title: "经度",
+      //     dataIndex: "longitude",
+      //     key: "longitude",
+      //     // width:100,
+      //   }, {
+      //     title: "纬度",
+      //     dataIndex: "latitude",
+      //     key: "latitude",
+      //     // width:100,
+      //   }],
+      // },{
+      //   title: "维护人",
+      //   dataIndex: "contact",
+      //   key: "contact",
+      //   // width:100,
+      // },{
+      //   title: "维护人电话",
+      //   dataIndex: "tel",
+      //   key: "tel",
+      //   // width:100,
+      // },{
+      //   title: "经营管理企业",
+      //   dataIndex: "enterprise",
+      //   key: "enterprise",
+      //   // width:100,
+      // },{
+      //   title: "格口数量",
+      //   dataIndex: "gksl",
+      //   key: "gksl",
+      //   // width:100,
+      // },{
+      //   title: "数据上传时间",
+      //   dataIndex: "sjscsj",
+      //   key: "sjscsj",
+      //   // width:100,
+      // },{
+      //   title: "操作编码",
+      //   dataIndex: "czbm",
+      //   key: "czbm",
+      //   // width:100,
+      // },{
+      //   title: "柜体箱子类型",
+      //   dataIndex: "gtxzlx",
+      //   key: "gtxzlx",
+      //   // width:100,
+      // },{
+      //   title: "快件箱编号",
+      //   dataIndex: "gtmcmmkjxbh",
+      //   key: "gtmcmmkjxbh",
+      //   // width:100,
+      // },{
+      //   title: "批次",
+      //   dataIndex: "pc",
+      //   key: "pc",
+      //   // width:100,
+      // },{
+      //   title: "所属企业",
+      //   dataIndex: "ssqy",
+      //   key: "ssqy",
+      //   // width:100,
+      // },
+      {
+        title: "省名称",
+        dataIndex: "provinceName",
+        key: "provinceName",
+        // width:100,
+      },
+      {
+        title: "市名称",
+        dataIndex: "cityName",
+        key: "cityName",
+        // width:100,
+      },
+      {
+        title: "区名称",
+        dataIndex: "districtName",
+        key: "districtName",
+        // width:100,
+      },
       {
         title: "企业编号",
-        dataIndex: "compNo",
-        key: "compNo",
+        dataIndex: "compno",
+        key: "compno",
         // width:100,
       },
       {
-        title: "企业名称",
-        dataIndex: "compNa",
-        key: "compNa",
+        title: "柜体编号",
+        dataIndex: "cabinetCode",
+        key: "cabinetCode",
         // width:100,
       },
       {
-        title: "编号",
-        dataIndex: "boxNo",
-        key: "boxNo",
-        // width:100,
-      },
-      {
-        title: "名称",
-        dataIndex: "boxName",
-        key: "boxName",
-        // width:100,
-      },{
-        title: "地址",
-        dataIndex: "address",
-        key: "address",
+        title: "柜体名称",
+        dataIndex: "cabinetName",
+        key: "cabinetName",
         // width:100,
       }, {
-        title:"经纬度",
+        title: "柜体地址",
+        dataIndex: "cabinetAddress",
+        key: "cabinetAddress",
+        // width:100,
+      },
+      {
+        title: "柜体箱子总数量",
+        dataIndex: "cabinetBoxtotal",
+        key: "cabinetBoxtotal",
+        // width:100,
+      }, {
+        title: "柜体包含箱子种类",
+        dataIndex: "cabinetBoxType",
+        key: "cabinetBoxType",
+        // width:100,
+      }, {
+        title: "柜子启用时间",
+        dataIndex: "cabinetOpeningTime",
+        key: "cabinetOpeningTime",
+        // width:100,
+      }, {
+        title: "柜子撤销时间",
+        dataIndex: "cabinetRevocationtime",
+        key: "cabinetRevocationtime",
+        // width:100,
+      }, {
+        title: "经纬度",
         children: [{
           title: "经度",
-          dataIndex: "longitude",
-          key: "longitude",
+          dataIndex: "cabinetLongitude",
+          key: "cabinetLongitude",
           // width:100,
         }, {
           title: "纬度",
-          dataIndex: "latitude",
-          key: "latitude",
+          dataIndex: "cabinetLatitude",
+          key: "cabinetLatitude",
           // width:100,
         }],
-      },{
-        title: "维护人",
-        dataIndex: "contact",
-        key: "contact",
-        // width:100,
-      },{
-        title: "维护人电话",
-        dataIndex: "tel",
-        key: "tel",
-        // width:100,
-      },{
-        title: "经营管理企业",
-        dataIndex: "enterprise",
-        key: "enterprise",
-        // width:100,
-      },{
-        title: "格口数量",
-        dataIndex: "gksl",
-        key: "gksl",
-        // width:100,
-      },{
-        title: "数据上传时间",
-        dataIndex: "sjscsj",
-        key: "sjscsj",
-        // width:100,
-      },{
-        title: "操作编码",
-        dataIndex: "czbm",
-        key: "czbm",
-        // width:100,
-      },{
-        title: "柜体箱子类型",
-        dataIndex: "gtxzlx",
-        key: "gtxzlx",
-        // width:100,
-      },{
-        title: "快件箱编号",
-        dataIndex: "gtmcmmkjxbh",
-        key: "gtmcmmkjxbh",
-        // width:100,
-      },{
-        title: "批次",
-        dataIndex: "pc",
-        key: "pc",
-        // width:100,
-      },{
-        title: "所属企业",
-        dataIndex: "ssqy",
-        key: "ssqy",
+      }, {
+        title: "所属网点代码",
+        dataIndex: "belongFacilitycode",
+        key: "belongFacilitycode",
         // width:100,
       }, {
-        title: "",
-        dataIndex: "operation",
-        key: "operation",
-        // fixed: "right",
-        width:110,
-        render: (text, record) => {
-          console.log("this.props.controlList",this.props.controlList);
-          return (
-            <span>
-            {this.props.controlList.ebox_mod? <a href="javascript:" onClick={() => {
-              this.showEditModal(record);
-            }}>修改</a>:null}
-              {this.props.controlList.ebox_mod && this.props.controlList.ebox_del?<Divider type="vertical" />:null}
-              {
-                this.props.controlList.ebox_del?(this.props.expressBoxList.length >= 1
-                  ? (
-                    <Popconfirm
-                      title="是否要删除选中的用户信息?"
-                      placement="bottomRight"
-                      onConfirm={() => {
-                        this.rowDel(record);
-                      }}
-                    >
-                      <a href="javascript:;" style={{ color: "#f5222d" }}>删除</a>
-                    </Popconfirm>
-                  ) : null):null
-              }
-          </span>
-          );
-        }
-      }
+        title: "所属网点名称",
+        dataIndex: "belongFacilityname",
+        key: "belongFacilityname",
+        // width:100,
+      }, {
+        title: "批次",
+        dataIndex: "batch",
+        key: "batch",
+        // width:100,
+      },
+      //  {
+      //   title: "",
+      //   dataIndex: "operation",
+      //   key: "operation",
+      //   // fixed: "right",
+      //   width:110,
+      //   render: (text, record) => {
+      //     // console.log("this.props.controlList",this.props.controlList);
+      //     return (
+      //       <span>
+      //       {this.props.controlList.ebox_mod? <a href="javascript:" onClick={() => {
+      //         this.showEditModal(record);
+      //       }}>修改</a>:null}
+      //         {this.props.controlList.ebox_mod && this.props.controlList.ebox_del?<Divider type="vertical" />:null}
+      //         {
+      //           this.props.controlList.ebox_del?(this.props.expressBoxList.length >= 1
+      //             ? (
+      //               <Popconfirm
+      //                 title="是否要删除选中的用户信息?"
+      //                 placement="bottomRight"
+      //                 onConfirm={() => {
+      //                   this.rowDel(record);
+      //                 }}
+      //               >
+      //                 <a href="javascript:;" style={{ color: "#f5222d" }}>删除</a>
+      //               </Popconfirm>
+      //             ) : null):null
+      //         }
+      //     </span>
+      //     );
+      //   }
+      // }
     ],
-    openHighSearch:false,
-    selectedRowKeys:[],
+    openHighSearch: false,
+    selectedRowKeys: [],
   };
 
-  componentWillMount(){
+  componentWillMount() {
     // console.log("this.props.pagePath",this.props.pagePath);
     const { dispatch } = this.props;
     dispatch({
-      type:"expressBoxManage/Control",
-      payload:{
-        menuCode:this.props.pagePath,
-        token:sessionStorage.getItem('sys-token'),
+      type: "expressBoxManage/Control",
+      payload: {
+        menuCode: this.props.pagePath,
+        token: sessionStorage.getItem('sys-token'),
       }
     })
   }
 
   componentDidMount() {
     this.props.dispatch({
-      type:'expressBox/List',
-      payload:{
-        token:sessionStorage.getItem('sys-token'),
-        page:1,
-        pageSize:10
+      type: 'expressBox/List',
+      payload: {
+        token: sessionStorage.getItem('sys-token'),
+        page: 1,
+        pageSize: 10
       }
     })
   }
 
-  setSelectedRowKeys=()=>{
-    this.setState({selectedRowKeys:[]})
+  setSelectedRowKeys = () => {
+    this.setState({ selectedRowKeys: [] })
   };
 
-  showEditModal=(record)=>{
+  showEditModal = (record) => {
     this.setState({
       editVisible: true,
       rowData: record
@@ -193,51 +284,51 @@ export default class BoxInfo extends Component{
     });
   };
 
-  handleImportVisible=()=>{
+  handleImportVisible = () => {
     this.setState({
-      importVisible:true
+      importVisible: true
     })
   };
 
-  setEditModal=(value)=>{
+  setEditModal = (value) => {
     this.setState({
-      editVisible:value,
+      editVisible: value,
     })
   };
 
-  setAddModal=(value)=>{
+  setAddModal = (value) => {
     this.setState({
-      addVisible:value,
+      addVisible: value,
     })
   };
 
-  setImportModal=(value)=>{
+  setImportModal = (value) => {
     this.setState({
-      importVisible:value,
+      importVisible: value,
     })
   };
 
   rowDel = (key) => {
     let data;
-    if(this.getSearch){
-      data=this.getSearch();
+    if (this.getSearch) {
+      data = this.getSearch();
     }
-    const {dispatch,page,pageSize}=this.props;
+    const { dispatch, page, pageSize } = this.props;
     dispatch({
-      type:'expressBox/Del',
-      payload:{
-        opType:"del",
-        ids:key.sid,
-        token:sessionStorage.getItem('sys-token'),
+      type: 'expressBox/Del',
+      payload: {
+        opType: "del",
+        ids: key.sid,
+        token: sessionStorage.getItem('sys-token'),
       },
-      callback:()=>{
+      callback: () => {
         this.setSelectedRowKeys();
         dispatch({
-          type:'expressBox/List',
-          payload:{
+          type: 'expressBox/List',
+          payload: {
             ...data,
-            page:page,
-            pageSize:pageSize
+            page: page,
+            pageSize: pageSize
           }
         });
       }
@@ -246,44 +337,44 @@ export default class BoxInfo extends Component{
 
   moreRowDel = () => {
     let data;
-    if(this.getSearch){
-      data=this.getSearch();
+    if (this.getSearch) {
+      data = this.getSearch();
     }
-    const { selectedRowKeys} = this.state;
-    const {dispatch,page,pageSize}=this.props;
+    const { selectedRowKeys } = this.state;
+    const { dispatch, page, pageSize } = this.props;
     dispatch({
       type: "expressBox/Del",
-      payload:{
+      payload: {
         ids: selectedRowKeys.join(","),
-        opType:"del",
+        opType: "del",
         token: sessionStorage.getItem("sys-token")
       },
-      callback:()=>{
+      callback: () => {
         this.setSelectedRowKeys();
         dispatch({
-          type:'expressBox/List',
-          payload:{
+          type: 'expressBox/List',
+          payload: {
             ...data,
-            page:page,
-            pageSize:pageSize
+            page: page,
+            pageSize: pageSize
           }
         });
       }
     });
   };
 
-  handleSearch=()=>{
+  handleSearch = () => {
     const form = this.props.form;
     const { dispatch } = this.props;
     form.validateFields((err, values) => {
       if (!err) {
         dispatch({
           type: 'expressBox/List',
-          payload:{
+          payload: {
             page: 1,
-            pageSize:10,
+            pageSize: 10,
             ...values,
-            token:sessionStorage.getItem('sys-token'),
+            token: sessionStorage.getItem('sys-token'),
           },
         });
       }
@@ -292,69 +383,70 @@ export default class BoxInfo extends Component{
 
   hanldeHighSearch = () => {
     this.setState({
-      openHighSearch:!this.state.openHighSearch
+      openHighSearch: !this.state.openHighSearch
     })
   };
 
-  onChanged=(selectedRowKeys, selectedRows) => {
-    this.setState({selectedRowKeys:selectedRowKeys})
+  onChanged = (selectedRowKeys, selectedRows) => {
+    this.setState({ selectedRowKeys: selectedRowKeys })
   };
 
-  tableOnChange=(current, size)=>{
-    this.setState({selectedRowKeys:[]})
+  tableOnChange = (current, size) => {
+    this.setState({ selectedRowKeys: [] })
     const form = this.props.form;
     form.validateFields((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type:'expressBox/List',
-          payload:{
-            page:current,
-            pageSize:size,
+          type: 'expressBox/List',
+          payload: {
+            page: current,
+            pageSize: size,
             ...values,
-            token:sessionStorage.getItem('sys-token'),
+            token: sessionStorage.getItem('sys-token'),
           }
         });
       }
     })
   };
 
-  tableOnShowSizeChange=(page, pageSize)=>{
-    this.setState({selectedRowKeys:[]});
+  tableOnShowSizeChange = (page, pageSize) => {
+    this.setState({ selectedRowKeys: [] });
     const form = this.props.form;
     form.validateFields((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type:'expressBox/List',
-          payload:{
+          type: 'expressBox/List',
+          payload: {
             page,
             pageSize,
             ...values,
-            token:sessionStorage.getItem('sys-token'),
+            token: sessionStorage.getItem('sys-token'),
           }
         });
       }
     });
   };
 
-  getSearch=()=>{
+  getSearch = () => {
     let data;
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        data=values;
+        data = values;
       }
     });
     return data;
   };
 
-  render(){
-    const{columns,selectedRowKeys,editVisible,rowData,addVisible,setImportModal,importVisible}=this.state;
-    const {expressBoxList,pageSize,total,cheLoading}=this.props;
+  render() {
+    console.log(this.props)
+    const { columns, selectedRowKeys, editVisible, rowData, addVisible, setImportModal, importVisible } = this.state;
+    const { expressBoxList, pageSize, total, cheLoading } = this.props;
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
       labelCol: {
         sm: { span: 24 },
         md: { span: 24 },
-        lg: { span: 11},
+        lg: { span: 11 },
         xl: { span: 9 }
       },
       wrapperCol: {
@@ -365,11 +457,11 @@ export default class BoxInfo extends Component{
       }
     };
     const rowSelection = {
-      selectedRowKeys:selectedRowKeys,
-      onChange:this.onChanged,
+      selectedRowKeys: selectedRowKeys,
+      onChange: this.onChanged,
     };
     const pagination = {
-      current:this.props.page,
+      current: this.props.page,
       pageSize,
       total,
       showSizeChanger: true,
@@ -378,7 +470,7 @@ export default class BoxInfo extends Component{
       onShowSizeChange: this.tableOnShowSizeChange,
       // pageSizeOptions:['2','5','10']
     };
-    const normalSearch=(
+    const normalSearch = (
       <div className={styles.searchRow}>
         <Form layout="inline">
           <Row>
@@ -386,7 +478,7 @@ export default class BoxInfo extends Component{
               <Form.Item
                 label="企业编号"
                 {...formItemLayout}
-                style={{ width:"100%"}}
+                style={{ width: "100%" }}
               >
                 {getFieldDecorator("compNo", {
                   rules: [{ required: false }]
@@ -398,21 +490,21 @@ export default class BoxInfo extends Component{
                 )}
               </Form.Item>
             </Col>
-            <Col xs={{ span: 12 }} sm={{ span: 12 }} lg={{ span:6 }}>
+            <Col xs={{ span: 12 }} sm={{ span: 12 }} lg={{ span: 6 }}>
               <span className={styles.unSpan}>
-                <a style={{ marginRight: 20 }} onClick={this.hanldeHighSearch} style={{ marginRight: 20 }}>{this.state.openHighSearch?"收起":"展开"}</a>
+                <a style={{ marginRight: 20 }} onClick={this.hanldeHighSearch} style={{ marginRight: 20 }}>{this.state.openHighSearch ? "收起" : "展开"}</a>
                 <Button type="primary" icon="search" onClick={this.handleSearch}>
                   搜索
                 </Button>
-            </span>
+              </span>
             </Col>
-            <Col xs={{ span: 12 }} sm={{ span: 12 }} lg={{offset:6,span:6}}>
+            {/* <Col xs={{ span: 12 }} sm={{ span: 12 }} lg={{ offset: 6, span: 6 }}>
               <Row type="flex" justify="end">
-                {this.props.controlList.ebox_imp?<span className={styles.unSpan1}>
-                   <Button onClick={this.handleImportVisible}><Icon type="upload" /> 导入</Button>
-                </span>:null}
+                {this.props.controlList.ebox_imp ? <span className={styles.unSpan1}>
+                  <Button onClick={this.handleImportVisible}><Icon type="upload" /> 导入</Button>
+                </span> : null}
                 <span className={styles.unSpan1}>
-                  {this.props.controlList.ebox_del?(selectedRowKeys.length>0?<Popconfirm
+                  {this.props.controlList.ebox_del ? (selectedRowKeys.length > 0 ? <Popconfirm
                     okText="确定"
                     cancelText="取消"
                     title="是否要删除选中的用户信息?"
@@ -420,19 +512,19 @@ export default class BoxInfo extends Component{
                     onConfirm={this.moreRowDel}
                   >
                     <Button type="primary" className={styles.allDelete} style={{ marginLeft: 10 }}>删除</Button>
-                  </Popconfirm>:null):null}
-                  {this.props.controlList.ebox_add?<Button style={{ marginLeft: 10 }} type="primary" icon="plus" onClick={this.showAddModal}>添加</Button>:null}
+                  </Popconfirm> : null) : null}
+                  {this.props.controlList.ebox_add ? <Button style={{ marginLeft: 10 }} type="primary" icon="plus" onClick={this.showAddModal}>添加</Button> : null}
                 </span>
               </Row>
-            </Col>
+            </Col> */}
           </Row>
-          {this.state.openHighSearch?<Row>
+          {this.state.openHighSearch ? <Row>
             <Row>
-              <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+              {/* <Col sm={{ span: 24 }} lg={{ span: 6 }}>
                 <Form.Item
                   label="企业名称"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("compNa", {
                     rules: [{ required: false }]
@@ -448,7 +540,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="编号"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("boxNo", {
                     rules: [{ required: false }]
@@ -465,7 +557,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="名称"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("boxName", {
                     rules: [{ required: false }]
@@ -481,7 +573,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="地址"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("address", {
                     rules: [{ required: false }]
@@ -497,7 +589,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="经度"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("longitude", {
                     rules: [{ required: false }]
@@ -513,7 +605,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="纬度"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("latitude", {
                     rules: [{ required: false }]
@@ -529,7 +621,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="维护人"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("contact", {
                     rules: [{ required: false }]
@@ -545,7 +637,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="维护人电话"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("tel", {
                     rules: [{ required: false }]
@@ -561,7 +653,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="经营管理企业"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("enterprise", {
                     rules: [{ required: false }]
@@ -577,7 +669,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="格口数量"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("gksl", {
                     rules: [{ required: false }]
@@ -593,7 +685,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="数据上传时间"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("sjscsj", {
                     rules: [{ required: false }]
@@ -609,7 +701,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="操作编码"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("czbm", {
                     rules: [{ required: false }]
@@ -625,7 +717,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="柜体箱子类型"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("gtxzlx", {
                     rules: [{ required: false }]
@@ -641,7 +733,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="快件箱编号"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("gtmcmmkjxbh", {
                     rules: [{ required: false }]
@@ -657,7 +749,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="批次"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("pc", {
                     rules: [{ required: false }]
@@ -673,7 +765,7 @@ export default class BoxInfo extends Component{
                 <Form.Item
                   label="所属企业"
                   {...formItemLayout}
-                  style={{ width:"100%"}}
+                  style={{ width: "100%" }}
                 >
                   {getFieldDecorator("ssqy", {
                     rules: [{ required: false }]
@@ -684,17 +776,177 @@ export default class BoxInfo extends Component{
                     />
                   )}
                 </Form.Item>
+              </Col> */}
+              <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+                <Form.Item
+                  label="企业名称"
+                  {...formItemLayout}
+                  style={{ width: "100%" }}
+                >
+                  {getFieldDecorator("compna", {
+                    rules: [{ required: false }]
+                  })(
+                    <Input
+                      className={styles.formItemWidth}
+                      placeholder="请输入企业名称"
+                    />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+                <Form.Item
+                  label="柜体名称"
+                  {...formItemLayout}
+                  style={{ width: "100%" }}
+                >
+                  {getFieldDecorator("cabinetName", {
+                    rules: [{ required: false }]
+                  })(
+                    <Input
+                      className={styles.formItemWidth}
+                      placeholder="请输入柜体名称"
+                    />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+                <Form.Item
+                  label="柜体编号"
+                  {...formItemLayout}
+                  style={{ width: "100%" }}
+                >
+                  {getFieldDecorator("cabinetCode", {
+                    rules: [{ required: false }]
+                  })(
+                    <Input
+                      className={styles.formItemWidth}
+                      placeholder="请输入柜体编号"
+                    />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+                <Form.Item
+                  label="柜体地址"
+                  {...formItemLayout}
+                  style={{ width: "100%" }}
+                >
+                  {getFieldDecorator("cabinetAddress", {
+                    rules: [{ required: false }]
+                  })(
+                    <Input
+                      className={styles.formItemWidth}
+                      placeholder="请输入柜体地址"
+                    />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+                <Form.Item
+                  label="所属网点编码"
+                  {...formItemLayout}
+                  style={{ width: "100%" }}
+                >
+                  {getFieldDecorator("belongFacilitycode", {
+                    rules: [{ required: false }]
+                  })(
+                    <Input
+                      className={styles.formItemWidth}
+                      placeholder="请输入所属网点编码"
+                    />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+                <Form.Item
+                  label="所属网点名称"
+                  {...formItemLayout}
+                  style={{ width: "100%" }}
+                >
+                  {getFieldDecorator("belongFacilityname", {
+                    rules: [{ required: false }]
+                  })(
+                    <Input
+                      className={styles.formItemWidth}
+                      placeholder="请输入所属网点名称"
+                    />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+                <Form.Item
+                  label="省名称"
+                  {...formItemLayout}
+                  style={{ width: "100%" }}
+                >
+                  {getFieldDecorator("provinceName", {
+                    rules: [{ required: false }]
+                  })(
+                    <Input
+                      className={styles.formItemWidth}
+                      placeholder="请输入省名称"
+                    />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+                <Form.Item
+                  label="市名称"
+                  {...formItemLayout}
+                  style={{ width: "100%" }}
+                >
+                  {getFieldDecorator("cityName", {
+                    rules: [{ required: false }]
+                  })(
+                    <Input
+                      className={styles.formItemWidth}
+                      placeholder="请输入市名称"
+                    />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+                <Form.Item
+                  label="区名称"
+                  {...formItemLayout}
+                  style={{ width: "100%" }}
+                >
+                  {getFieldDecorator("districtName", {
+                    rules: [{ required: false }]
+                  })(
+                    <Input
+                      className={styles.formItemWidth}
+                      placeholder="请输入区名称"
+                    />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+                <Form.Item
+                  label="数据上传日期"
+                  {...formItemLayout}
+                  style={{ width: "100%" }}
+                >
+                  {getFieldDecorator("DAY", {
+                    rules: [{ required: false }]
+                  })(
+                    <Input
+                      className={styles.formItemWidth}
+                      placeholder="请输入日期(如2019-01-01)"
+                    />
+                  )}
+                </Form.Item>
               </Col>
             </Row>
-          </Row>:null}
+          </Row> : null}
         </Form>
       </div>
     );
-    return(
+    return (
       <Card>
-        <AddModal addVisible={addVisible} setAddModal={this.setAddModal} getSearch={this.getSearch} setSelectedRowKeys={this.setSelectedRowKeys}/>
-        <EditModal editVisible={editVisible} rowData={rowData} setEditModal={this.setEditModal} getSearch={this.getSearch} setSelectedRowKeys={this.setSelectedRowKeys} />
-        <ImportModal importVisible={importVisible} setImportModal={this.setImportModal} dispatch={this.props.dispatch} getSearch={this.getSearch} setSelectedRowKeys={this.setSelectedRowKeys} />
+        {/* <AddModal addVisible={addVisible} setAddModal={this.setAddModal} getSearch={this.getSearch} setSelectedRowKeys={this.setSelectedRowKeys} /> */}
+        {/* <EditModal editVisible={editVisible} rowData={rowData} setEditModal={this.setEditModal} getSearch={this.getSearch} setSelectedRowKeys={this.setSelectedRowKeys} /> */}
+        {/* <ImportModal importVisible={importVisible} setImportModal={this.setImportModal} dispatch={this.props.dispatch} getSearch={this.getSearch} setSelectedRowKeys={this.setSelectedRowKeys} /> */}
         {normalSearch}
         <Table
           dataSource={expressBoxList}
@@ -703,25 +955,27 @@ export default class BoxInfo extends Component{
           rowSelection={rowSelection}
           loading={cheLoading}
           rowKey="sid"
-          scroll={{x:"100%"}}
+          scroll={{ x: "100%" }}
           pagination={pagination}
           onRow={(record) => {
-            return { onClick: (event) => {
+            return {
+              onClick: (event) => {
                 // console.log("record",record);
-                if(selectedRowKeys.indexOf(record.sid) > -1){
-                  let index=selectedRowKeys.indexOf(record.sid);
+                if (selectedRowKeys.indexOf(record.sid) > -1) {
+                  let index = selectedRowKeys.indexOf(record.sid);
                   selectedRowKeys.splice(index, 1);
                   this.setState({
-                    selectedRowKeys:selectedRowKeys
+                    selectedRowKeys: selectedRowKeys
                   })
-                }else{
+                } else {
                   selectedRowKeys.push(record.sid);
                   this.setState({
-                    selectedRowKeys:selectedRowKeys
+                    selectedRowKeys: selectedRowKeys
                   })
                 }
                 // console.log("selectedRowKeys",selectedRowKeys);
-              }};
+              }
+            };
           }}
         />
       </Card>

@@ -1,0 +1,25 @@
+
+.ftips-name{
+    font-size: 20px;
+    font-weight: 500;
+    color:rgb(196, 142, 80)
+}
+
+.ftips-value{
+    font-size: 28px;
+    font-weight: 400;
+    color:rgb(67, 109, 224)
+}
+
+.component-title{
+    font-size: 16px;
+    color:rgb(255, 255, 255)
+}
+
+.component-title-background{
+    background-color:rgba(67, 109, 224,0.8);
+    overflow: hidden;
+}
+.float-right-el{
+     float: right
+}

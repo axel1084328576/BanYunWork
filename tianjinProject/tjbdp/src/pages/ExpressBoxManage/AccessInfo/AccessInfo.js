@@ -79,7 +79,14 @@ export default class DeliverInfo extends Component{
         dataIndex: "expressName",
         key: "expressName",
         // width:100,
-      },{
+      },
+      // {
+      //   title: "企业代码",
+      //   dataIndex: "compno",
+      //   key: "compno",
+      //   // width:100,
+      // },
+      {
         title: "网点名称",
         dataIndex: "facilityName",
         key: "facilityName",
@@ -125,14 +132,14 @@ export default class DeliverInfo extends Component{
   };
 
   componentDidMount() {
-    // this.props.dispatch({
-    //   type:'expressBoxManage/sendList',
-    //   payload:{
-    //     token:sessionStorage.getItem('sys-token'),
-    //     page:1,
-    //     pageSize:10
-    //   }
-    // })
+    this.props.dispatch({
+      type:'expressBoxManage/pickUpList',
+      payload:{
+        token:sessionStorage.getItem('sys-token'),
+        page:1,
+        pageSize:10
+      }
+    })
   }
 
   handleSearch=()=>{
@@ -140,15 +147,15 @@ export default class DeliverInfo extends Component{
     const { dispatch } = this.props;
     form.validateFields((err, values) => {
       if (!err) {
-        // dispatch({
-        //   type: 'expressBoxManage/sendList',
-        //   payload:{
-        //     page: 1,
-        //     pageSize:10,
-        //     ...values,
-        //     token:sessionStorage.getItem('sys-token'),
-        //   },
-        // });
+        dispatch({
+          type: 'expressBoxManage/pickUpList',
+          payload:{
+            page: 1,
+            pageSize:10,
+            ...values,
+            token:sessionStorage.getItem('sys-token'),
+          },
+        });
       }
     })
   }
@@ -163,15 +170,15 @@ export default class DeliverInfo extends Component{
     const form = this.props.form;
     form.validateFields((err, values) => {
       if (!err) {
-        // this.props.dispatch({
-        //   type:'expressBoxManage/sendList',
-        //   payload:{
-        //     page:current,
-        //     pageSize:size,
-        //     ...values,
-        //     token:sessionStorage.getItem('sys-token'),
-        //   }
-        // });
+        this.props.dispatch({
+          type:'expressBoxManage/pickUpList',
+          payload:{
+            page:current,
+            pageSize:size,
+            ...values,
+            token:sessionStorage.getItem('sys-token'),
+          }
+        });
       }
     })
   };
@@ -180,15 +187,15 @@ export default class DeliverInfo extends Component{
     const form = this.props.form;
     form.validateFields((err, values) => {
       if (!err) {
-        // this.props.dispatch({
-        //   type:'expressBoxManage/sendList',
-        //   payload:{
-        //     page,
-        //     pageSize,
-        //     ...values,
-        //     token:sessionStorage.getItem('sys-token'),
-        //   }
-        // });
+        this.props.dispatch({
+          type:'expressBoxManage/pickUpList',
+          payload:{
+            page,
+            pageSize,
+            ...values,
+            token:sessionStorage.getItem('sys-token'),
+          }
+        });
       }
     });
   };
@@ -232,7 +239,7 @@ export default class DeliverInfo extends Component{
                 {...formItemLayout}
                 style={{ width:"100%"}}
               >
-                {getFieldDecorator("运单编号", {
+                {getFieldDecorator("trackNumber", {
                   rules: [{ required: false }]
                 })(
                   <Input
@@ -254,7 +261,7 @@ export default class DeliverInfo extends Component{
             </Col>
           </Row>
           {this.state.openHighSearch? <Row>
-            <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+            {/* <Col sm={{ span: 24 }} lg={{ span: 6 }}>
               <Form.Item
                 label="包裹类型"
                 {...formItemLayout}
@@ -317,7 +324,23 @@ export default class DeliverInfo extends Component{
                   />
                 )}
               </Form.Item>
-            </Col>
+            </Col> */}
+             {/* <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+              <Form.Item
+                label="企业代码"
+                {...formItemLayout}
+                style={{ width:"100%"}}
+              >
+                {getFieldDecorator("compno", {
+                  rules: [{ required: false }]
+                })(
+                  <Input
+                    className={styles.formItemWidth}
+                    placeholder="请输入企业代码"
+                  />
+                )}
+              </Form.Item>
+            </Col> */}
             <Col sm={{ span: 24 }} lg={{ span: 6 }}>
               <Form.Item
                 label="寄件人地址"
@@ -334,7 +357,7 @@ export default class DeliverInfo extends Component{
                 )}
               </Form.Item>
             </Col>
-            <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+            {/* <Col sm={{ span: 24 }} lg={{ span: 6 }}>
               <Form.Item
                 label="收件人地址"
                 {...formItemLayout}
@@ -349,8 +372,8 @@ export default class DeliverInfo extends Component{
                   />
                 )}
               </Form.Item>
-            </Col>
-            <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+            </Col> */}
+            {/* <Col sm={{ span: 24 }} lg={{ span: 6 }}>
               <Form.Item
                 label="目的省"
                 {...formItemLayout}
@@ -397,7 +420,7 @@ export default class DeliverInfo extends Component{
                   />
                 )}
               </Form.Item>
-            </Col>
+            </Col> */}
             <Col sm={{ span: 24 }} lg={{ span: 6 }}>
               <Form.Item
                 label="收件人详细地址"
@@ -463,6 +486,22 @@ export default class DeliverInfo extends Component{
               </Form.Item>
             </Col>
             <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+              <Form.Item
+                label="数据上传日期"
+                {...formItemLayout}
+                style={{ width: "100%" }}
+              >
+                {getFieldDecorator("DAY", {
+                  rules: [{ required: false }]
+                })(
+                  <Input
+                    className={styles.formItemWidth}
+                    placeholder="请输入日期(如2019-01-01)"
+                  />
+                )}
+              </Form.Item>
+            </Col>
+            {/* <Col sm={{ span: 24 }} lg={{ span: 6 }}>
               <Form.Item
                 label="揽件时间"
                 {...formItemLayout}
@@ -557,7 +596,7 @@ export default class DeliverInfo extends Component{
                   />
                 )}
               </Form.Item>
-            </Col>
+            </Col> */}
           </Row> :null}
         </Form>
       </div>
@@ -570,8 +609,8 @@ export default class DeliverInfo extends Component{
           columns={columns}
           bordered
           loading={pickUpLoading}
-          // rowKey="sid"
-          // scroll={{x:"100%"}}
+          rowKey="sid"
+          scroll={{x:"100%"}}
           pagination={pagination}
         />
       </Card>
