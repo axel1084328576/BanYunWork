@@ -1,0 +1,181 @@
+:global{
+
+  @font-face {
+    font-family: 'iconfont';  /* project id 1131833 */
+    src: url('//at.alicdn.com/t/font_1131833_evucdgajrrk.eot');
+    src: url('//at.alicdn.com/t/font_1131833_evucdgajrrk.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_1131833_evucdgajrrk.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_1131833_evucdgajrrk.woff') format('woff'),
+    url('//at.alicdn.com/t/font_1131833_evucdgajrrk.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_1131833_evucdgajrrk.svg#iconfont') format('svg');
+  }
+
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+}
+
+.wrap{
+  width:100%;
+  height:calc(100vh - 64px);
+  margin: 0 auto;
+
+  :global{
+    .ant-card-body{
+      padding: 10px 8px;
+    }
+  }
+
+  .leftCard{
+    position:  absolute;
+    left: 0;
+    top: 0;
+    width:20%;
+    height:calc(100vh - 168px);
+    background-color:#F5F5F5;
+    z-index: 2;
+  }
+
+  .topSelect{
+    position:  absolute;
+    left: 0;
+    top: 0;
+    width:100%;
+    z-index: 2;
+  }
+
+  .infoTip{
+    position:  absolute;
+    width: 24%;
+    left:22%;
+    top: 10px;
+
+    .closeIcon{
+      position:absolute;
+      right:4px;
+      top:4px;
+    }
+
+    :global{
+      .ant-card-body{
+        padding: 8px 6px;
+      }
+    }
+  }
+
+  .infoTip1{
+    position:  absolute;
+    width: 24%;
+    left:10px;
+    top: 10px;
+
+    .closeIcon{
+      position:absolute;
+      right:4px;
+      top:4px;
+    }
+
+    :global{
+      .ant-card-body{
+        padding: 8px 6px;
+      }
+    }
+  }
+
+  .amapDiv{
+    width:100%;
+    height:calc(100vh - 168px);
+  }
+}
+
+@media (max-width: 768px){
+  .wrap{
+    .leftCard{
+      position:  absolute;
+      left: 0;
+      top: 0;
+      width:100%;
+      height:14vh;
+      background-color:rgba(255,255,255,0);
+      z-index: 2;
+    }
+
+    .infoTip{
+      position:  absolute;
+      width: 30%;
+      left:10px;
+      top:10%;
+
+      .closeIcon{
+        position:absolute;
+        right:4px;
+        top:4px;
+      }
+
+      :global{
+        .ant-card-body{
+          padding: 10px 8px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 641px){
+  .wrap{
+    .leftCard{
+      height:calc(100vh - 168px);
+    }
+    .amapDiv{
+      width:100%;
+      height:calc(100vh - 168px);
+    }
+
+    .infoTip{
+      position:  absolute;
+      width:100%;
+      height:30vh;
+      top:calc(70vh - 168px);
+      left:0;
+
+
+      .closeIcon{
+        position:absolute;
+        right:4px;
+        top:4px;
+      }
+
+      :global{
+        .ant-card-body{
+          padding: 10px 8px;
+        }
+      }
+    }
+
+    .infoTip1{
+      position:  absolute;
+      width:100%;
+      height:30vh;
+      top:calc(70vh - 168px);
+      left: 0;
+
+
+      .closeIcon{
+        position:absolute;
+        right:4px;
+        top:4px;
+      }
+
+      :global{
+        .ant-card-body{
+          padding: 10px 8px;
+        }
+      }
+    }
+  }
+}
