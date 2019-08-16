@@ -1,4 +1,4 @@
-const provienceData = [
+const provinceData = [
     {name: '新疆', area: 'xinjiang'},
     {name: '西藏', area: 'xizang'},
     {name: '内蒙古', area: 'neimenggu'},
@@ -229,4 +229,4 @@ const geoCoordMap = {
     '大庆': [125.03, 46.58]
 };
 
-export {provienceData, geoCoordMap}
+export {provinceData, geoCoordMap}

@@ -4,12 +4,15 @@ import echarts from 'echarts'
 import 'echarts-gl'
 import { Row, Col, Statistic, Button } from 'antd'
 import geoJson from 'echarts/map/json/china.json'
-import { geoCoordMap, provienceData } from './geo.js'
-
+import { provinceData } from './geo.js'
 import { numberToShow } from '@/utils/numberUtils'
-import FTips from '@/components/Home/FTipsComponent.js'
+import FTips from '@/components/Home/FTipsComponent'
+import MainMap from '@/components/Home/MainMap'
+import BusinessTrend from '@/components/Home/BusinessTrend'
+import BusinessValueTrend from '@/components/Home/BusinessValueTrend'
 
 import homeStyle from './home.css'
+
 // 主屏
 
 export default class Home extends Component {
@@ -19,7 +22,7 @@ export default class Home extends Component {
       userName: 'admin',
       userType: '1',
       userArea: 'china',
-      mapData: provienceData,
+      mapData: provinceData,
       FTipsvalue: {
         current: 12312441,
         yesterday: 23325433,
@@ -47,13 +50,25 @@ export default class Home extends Component {
           weekendAvg: [3351641868, 25],
           holidayAvg: [4351641868, 27]
         }
+      },
+      // 业务量趋势   0 快递业务 1 邮政业务 
+      BusinessValueTrendValue: {
+        type: 0,
+        ywl: [{
+          year: ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+          ywl: [29.45, 45.54, 89.14, 113.24, 143.45, 257.54, 301.12, 506.59, 135.29],
+          rate: [56, 45, 68, 25, 46, 38, 48]
+        }, {
+          year: ['2011', '2012', '2013', '2014', '2015', '2016', '2017', '2018', '2019'],
+          ywl: [19.45, 35.54, 80.14, 93.24, 123.45, 237.54, 271.12, 306.59, 98.29],
+          rate: [46, 48, 78, 35, 56, 48, 42]
+        }]
       }
     }
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.onWindowResize.bind(this))
-    this.initalECharts();
   }
 
   componentWillUnmount() {
@@ -65,141 +80,49 @@ export default class Home extends Component {
     console.log('changeSize');
   }
 
-  // 主地图加载更新
-  initalECharts() {
-    echarts.registerMap('china', geoJson);
-    // 获取地图数据
-    const { mapData } = this.state;
-    // 拼装echarts所需数据结构
-    const regions = mapData.map(function res(feature) {
-      return {
-        name: feature.name,
-        value: Math.random(),
-        // height: 1,
-        itemStyle: {
-          opacity: 0.8,
-          borderWidth: 1
-        }
-      };
-    });
-
-    const myChart = echarts.init(document.getElementById('mainMap'));
-    myChart.setOption({
-      tooltip: {
-        show: false,       // 不显示提示标签
-        formatter: '{b}',      // 提示标签格式
-        backgroundColor: "#ff7f50",// 提示标签背景颜色
-        textStyle: { color: "#fff" } // 提示标签字体颜色
-      },
-      visualMap: {
-        show: false,
-        min: 0,
-        max: 1,
-        inRange: {
-          color: ['#313695', '#4575b4']
-        }
-      },
-      grid: {
-        left: '10%',
-        right: '10%',
-        top: '2%',
-        bottom: '10%',
-        containLabel: true
-      },
-      series: [
-        {
-          name: 'china',
-          type: 'map3D',
-          map: 'china',
-          viewControl: {
-            // 缩放灵敏度 0为不缩放
-            zoomSensitivity: 0,
-            // 平移灵敏度 0为不平移
-            panSensitivity: 0,
-            beta: 0,
-            alpha: 60,
-            minBeta: 0,
-            maxBeta: 0,
-            minAlpha: 50,
-            maxAlpha: 70
-          },
-          regionHeight: 2,
-          data: regions
-        }
-      ],
-    })
-  }
-
-  // 地图上方四类数据
-  // FTips(props) {
-  //   // const nameStyle=homeStyle['ftips-name'];
-  //   return (
-  //     <div>
-  //       <Col span={6}>
-  //         <div className={homeStyle['ftips-name']}>今日业务量</div>
-  //         <div className={homeStyle['ftips-value']}>{numberToShow(props.value.current)}</div>
-  //         <Statistic title="Active Users" value={props.value.current} />
-  //       </Col>
-  //       <Col span={6}>
-  //         <div className={homeStyle['ftips-name']}>昨日业务量</div>
-  //         <div className={homeStyle['ftips-value']}>{numberToShow(props.value.yesterday)}</div>
-  //       </Col>
-  //       <Col span={6}>
-  //         <div className={homeStyle['ftips-name']}>本月累计业务量</div>
-  //         <div className={homeStyle['ftips-value']}>{numberToShow(props.value.month)}</div>
-  //       </Col>
-  //       <Col span={6}>
-  //         <div className={homeStyle['ftips-name']}>本年累计业务量</div>
-  //         <div className={homeStyle['ftips-value']}>{numberToShow(props.value.year)}</div>
-  //       </Col>
-  //     </div>)
-  // }
-
-  // 业务趋势
-  BusinessTrend(props) {
-
-    return (
-      <div>
-        <div className={homeStyle['component-title-background']}>
-          <Col span={12} className={homeStyle['component-title']}>业务趋势 </Col>
-          <Col span={12}>
-            <Button ghost className={homeStyle['float-right-el']}>业务统计</Button>
-            <Button ghost className={homeStyle['float-right-el']}>业务总览</Button>
-          </Col>
-
-        </div>
-      </div>
-    )
-  }
-
-  // formatValue(val){
-  //   return(
-
-  //   )
-
-  // }
-
   render() {
     return (
       <div>
         <Row>
           <Col span={6} style={{ height: '90vh' }}>
-            <Col span={24}>
-              <this.BusinessTrend value={this.state.BusinessTrendValue} />
+            <Col span={24} style={{ height: '25%' }}>
+              <BusinessTrend value={this.state.BusinessTrendValue} />
+            </Col>
+            <Col span={24} style={{ height: '25%' }}>
+              <BusinessValueTrend value={this.state.BusinessValueTrendValue} />
+            </Col>
+            <Col span={24} style={{ height: '25%' }}>
+              <BusinessTrend value={this.state.BusinessTrendValue} />
+            </Col>
+            <Col span={24} style={{ height: '25%' }}>
+              <BusinessValueTrend value={this.state.BusinessValueTrendValue} />
             </Col>
           </Col>
           <Col span={12} style={{ height: '90vh' }}>
             <Col span={24} style={{ height: '10%' }}>
               <FTips value={this.state.FTipsvalue} />
             </Col>
-            <Col span={24} style={{ height: '70%' }}>
-              <div id="mainMap" style={{ height: '100%' }} />
+            <Col span={24} style={{ height: '65%' }}>
+              <MainMap value={this.state.mapData} />
             </Col>
-            <Col span={24} style={{ height: '20%' }}>
-              <div id="mainMap" style={{ height: '100%' }} />
+            <Col span={24} style={{ height: '25%' }}>
+              <BusinessValueTrend value={this.state.BusinessValueTrendValue} />
             </Col>
           </Col>
-          <Col span={6} style={{ height: '90vh' }}>span2</Col>
+          <Col span={6} style={{ height: '90vh' }}>
+            <Col span={24} style={{ height: '25%' }}>
+              <BusinessValueTrend value={this.state.BusinessValueTrendValue} />
+            </Col>
+            <Col span={24} style={{ height: '25%' }}>
+              <BusinessValueTrend value={this.state.BusinessValueTrendValue} />
+            </Col>
+            <Col span={24} style={{ height: '25%' }}>
+              <BusinessValueTrend value={this.state.BusinessValueTrendValue} />
+            </Col>
+            <Col span={24} style={{ height: '25%' }}>
+              <BusinessValueTrend value={this.state.BusinessValueTrendValue} />
+            </Col>
+          </Col>
         </Row>
       </div>
     );
