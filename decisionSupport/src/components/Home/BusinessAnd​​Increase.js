@@ -1,39 +1,78 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-var */
-import React from 'react';
-import echarts from 'echarts';
-import { Col, Button } from 'antd';
 
-import Style from './BusinessValueTrend.css'
+import React from 'react'
+import echarts from 'echarts'
+import { Col } from 'antd'
 
+import Style from './BusinessAndIncrease.css'
 
-// 主页左中业务量趋势
+// 主屏右上业务量及增速
 
-class BusinessValueTrend extends React.Component {
+class BusinessAndIncrease extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            ...props.value
+            select: {
+                size: 1,
+                options: ['2019', '2018', '2017', '2016', '2015', '2014', '2013']
+            },
+            value: props.value
         }
     }
 
-
-
     componentDidMount() {
-        this.initOption();
+        this.initOption(this.state.select.options[0]);
     }
 
-    initOption(val) {
+    selectlength(val) {
+        if (this.state.select.options.length > 3) {
+            this.setState(
+                {
+                    select: {
+                        ...this.state.select,
+                        size: val
+                    }
+                }
+            )
+        };
+    }
 
-        const index = val > -1 ? val : 0;
-        const data = this.state.ywl[index];
-        const riseRate = [null];
-        riseRate.push.apply(riseRate, data.rate);
-        riseRate.push(null);
+    selectChange(e) {
+        this.setState(
+            {
+                select: {
+                    ...this.state.select,
+                    size: 1
+                }
+            }
+        )
+        this.initOption(e.target.value);
+    }
 
-        const ywlArray = data.ywl;
-        const xData = data.year;
+    // option初始化
+    initOption(current) {
+
+
+        if (current == null) {
+            current = this.state.select.options[0];
+        }
+
+        let data = null;
+        for (let i in this.state.value) {
+            if (this.state.value[i].year === current) {
+                data = this.state.value[i];
+                break;
+            }
+        }
+
+        let riseRate = [];
+        let ywlArray = [];
+        let xData = [];
+        if (data !== undefined && data != null) {
+            riseRate = data.rate;
+            ywlArray = data.ywl;
+            xData = data.ent;
+        }
+
         const legendData = [
             { name: '邮政业务量(亿件)' },
             {
@@ -41,17 +80,10 @@ class BusinessValueTrend extends React.Component {
                 // icon: 'pin'
             }];
 
-
-        const myChart = echarts.init(document.getElementById('option'));
+        const myChart = echarts.init(document.getElementById('BAIoption'));
         myChart.setOption({
             tooltip: {
                 trigger: 'axis',
-                // axisPointer: {
-                //     type: 'cross',
-                //     label: {
-                //         backgroundColor: '#283b56'
-                //     }
-                // }
             },
             legend: {
                 data: legendData,
@@ -101,7 +133,7 @@ class BusinessValueTrend extends React.Component {
                     type: 'value',
                     scale: true,
                     name: '业务量',
-                    min: 0,
+                    min: -20,
                     axisLabel: {
                         color: '#44abf7'
                     },
@@ -114,8 +146,8 @@ class BusinessValueTrend extends React.Component {
                     type: 'value',
                     scale: true,
                     name: '增长率',
-                    max: 100,
-                    min: 0,
+                    // max: 20,
+                    min: -20,
                     axisLabel: {
                         color: '#44abf7',
                         formatter: function (value, index) {
@@ -163,25 +195,32 @@ class BusinessValueTrend extends React.Component {
         })
     }
 
-    change(val) {
-        this.setState({ type: val });
-        this.initOption(val);
-    }
 
     render() {
+
+        const options = ['2019', '2018', '2017', '2016', '2015', '2014', '2013'].map((val) =>
+            <option value={val}>{val}</option>)
+
         return (
             <div style={{ height: '100%' }}>
                 <div className={Style['component-title-background']}>
-                    <Col span={12} className={Style['component-title']}>业务量趋势</Col>
+                    <Col span={12} className={Style['component-title']}>业务量及增速 </Col>
                     <Col span={12}>
-                        <Button ghost className={Style['float-right-el']} onClick={this.change.bind(this, 1)} > 邮政业务 </Button>
-                        <Button ghost className={Style['float-right-el']} onClick={this.change.bind(this, 0)} > 快递业务 </Button>
+                        <select className={Style['float-right-el']}
+                            onMouseDown={this.selectlength.bind(this, 4)}
+                            onChange={this.selectChange.bind(this)}
+                            onMouseLeave={this.selectlength.bind(this, 1)}
+                            size={this.state.select.size}
+                        // value = {}
+                        >
+                            {options}
+                        </select>
                     </Col>
                 </div>
-                <div id='option' style={{ height: '80%' }} />
+                <div id='BAIoption' style={{ height: '80%' }} />
             </div>
-        )
+        );
     }
 }
 
-export default BusinessValueTrend;
+export default BusinessAndIncrease;

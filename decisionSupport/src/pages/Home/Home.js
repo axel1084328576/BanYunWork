@@ -1,15 +1,14 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react'
-import echarts from 'echarts'
 import 'echarts-gl'
-import { Row, Col, Statistic, Button } from 'antd'
-import geoJson from 'echarts/map/json/china.json'
-import { provinceData } from './geo.js'
-import { numberToShow } from '@/utils/numberUtils'
+import { Row, Col } from 'antd'
+import { provinceData } from './geo'
 import FTips from '@/components/Home/FTipsComponent'
 import MainMap from '@/components/Home/MainMap'
 import BusinessTrend from '@/components/Home/BusinessTrend'
 import BusinessValueTrend from '@/components/Home/BusinessValueTrend'
+import BusinessAndIncrease from '@/components/Home/BusinessAnd​​Increase'
+import ProcessEfficacy from '@/components/Home/ProcessEfficacy'
 
 import homeStyle from './home.css'
 
@@ -63,7 +62,22 @@ export default class Home extends Component {
           ywl: [19.45, 35.54, 80.14, 93.24, 123.45, 237.54, 271.12, 306.59, 98.29],
           rate: [46, 48, 78, 35, 56, 48, 42]
         }]
-      }
+      },
+      // 业务量及增速
+      BusinessAndIncreaseValue: [
+        {
+          year: '2019',
+          ent: ['YTO', 'ZTO', 'SF', 'YUNDA', 'EMS', 'ZGYZ', 'BSHT'],
+          ywl: [34, 52, 64, 37, 17, 48, 44],
+          rate: [2.5, 5.3, 3.4, 3.3, 6.7, 0.9, 8.1]
+        },
+        {
+          year: '2018',
+          ent: ['YTO', 'ZTO', 'SF', 'YUNDA', 'EMS', 'ZGYZ', 'BSHT'],
+          ywl: [39, 22, 54, 47, 27, 41, 40],
+          rate: [3.5, -3.3, 7.4, 4.3, 8.7, -3.9, 5.1]
+        }
+      ]
     }
   }
 
@@ -77,7 +91,6 @@ export default class Home extends Component {
   }
 
   onWindowResize() {
-    console.log('changeSize');
   }
 
   render() {
@@ -111,13 +124,13 @@ export default class Home extends Component {
           </Col>
           <Col span={6} style={{ height: '90vh' }}>
             <Col span={24} style={{ height: '25%' }}>
-              <BusinessValueTrend value={this.state.BusinessValueTrendValue} />
+              <BusinessAndIncrease value={this.state.BusinessAndIncreaseValue} />
             </Col>
             <Col span={24} style={{ height: '25%' }}>
               <BusinessValueTrend value={this.state.BusinessValueTrendValue} />
             </Col>
             <Col span={24} style={{ height: '25%' }}>
-              <BusinessValueTrend value={this.state.BusinessValueTrendValue} />
+              <ProcessEfficacy value={this.state.BusinessValueTrendValue} />
             </Col>
             <Col span={24} style={{ height: '25%' }}>
               <BusinessValueTrend value={this.state.BusinessValueTrendValue} />

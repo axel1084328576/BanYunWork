@@ -1,0 +1,18 @@
+.component-title {
+  font-size: 16px;
+  color: rgb(255, 255, 255)
+}
+
+.component-title-background {
+  background-color: rgba(67, 109, 224, 0.8);
+  /* overflow: hidden; */
+  height: 25px;
+}
+
+.float-right-el {
+  float: right;
+  /* position: absolute; */
+  background: rgba(0, 0, 0, 0);
+  border: 0;
+  color: aliceblue;
+}
