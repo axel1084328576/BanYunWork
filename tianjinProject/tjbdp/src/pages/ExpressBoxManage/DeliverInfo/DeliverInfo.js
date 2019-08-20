@@ -204,6 +204,9 @@ export default class DeliverInfo extends Component {
       onShowSizeChange: this.tableOnShowSizeChange,
       // pageSizeOptions:['2','5','10']
     };
+
+    console.log(pagination)
+
     const normalSearch = (
       <div className={styles.searchRow}>
         <Form layout="inline">

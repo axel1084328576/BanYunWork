@@ -25,6 +25,8 @@
   "dependencies": {
     "@antv/data-set": "^0.9.6",
     "@babel/runtime": "^7.0.0",
+    "amap": "^1.0.7",
+    "amap-js": "^1.2.1",
     "antd": "^3.20.7",
     "antd-iconfont": "^3.0.3",
     "bizcharts": "^3.2.2",

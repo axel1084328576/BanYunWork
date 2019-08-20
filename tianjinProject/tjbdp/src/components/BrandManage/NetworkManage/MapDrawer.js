@@ -33,6 +33,7 @@ export default class MapDrawer extends React.Component {
       }
     }]
 
+    console.log(this.props.mapData)
 
     return (
       <Map
