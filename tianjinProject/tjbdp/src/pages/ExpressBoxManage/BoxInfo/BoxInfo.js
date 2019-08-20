@@ -178,30 +178,32 @@ export default class BoxInfo extends Component {
         dataIndex: "cabinetRevocationtime",
         key: "cabinetRevocationtime",
         // width:100,
-      }, {
-        title: "经纬度",
-        children: [{
-          title: "经度",
-          dataIndex: "cabinetLongitude",
-          key: "cabinetLongitude",
-          // width:100,
-        }, {
-          title: "纬度",
-          dataIndex: "cabinetLatitude",
-          key: "cabinetLatitude",
-          // width:100,
-        }],
-      }, {
-        title: "所属网点代码",
-        dataIndex: "belongFacilitycode",
-        key: "belongFacilitycode",
-        // width:100,
-      }, {
-        title: "所属网点名称",
-        dataIndex: "belongFacilityname",
-        key: "belongFacilityname",
-        // width:100,
-      }, {
+      },
+      //  {
+      //   title: "经纬度",
+      //   children: [{
+      //     title: "经度",
+      //     dataIndex: "cabinetLongitude",
+      //     key: "cabinetLongitude",
+      //     // width:100,
+      //   }, {
+      //     title: "纬度",
+      //     dataIndex: "cabinetLatitude",
+      //     key: "cabinetLatitude",
+      //     // width:100,
+      //   }],
+      // }, {
+      //   title: "所属网点代码",
+      //   dataIndex: "belongFacilitycode",
+      //   key: "belongFacilitycode",
+      //   // width:100,
+      // }, {
+      //   title: "所属网点名称",
+      //   dataIndex: "belongFacilityname",
+      //   key: "belongFacilityname",
+      //   // width:100,
+      // }, 
+      {
         title: "批次",
         dataIndex: "batch",
         key: "batch",

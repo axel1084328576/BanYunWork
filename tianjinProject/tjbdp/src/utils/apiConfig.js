@@ -6,12 +6,12 @@
 // const host="http://192.168.96.91:8901";
 // const host = "http://111.160.20.248:8090/maildatav1";
 // const host="11.160.20.248:8090/maildatav1";
-// const host="http://10.10.75.147:9001/maildatav";
+const host = "http://10.10.75.144:9001/maildatav";
 /**
  *正式
  * */
 // const host="http://111.160.20.248:8090/maildatav";
-const host = "http://111.160.20.248:8089/maildatav";
+// const host = "http://111.160.20.248:8089/maildatav1";
 /**
  *临时
  * */
@@ -98,6 +98,7 @@ const infoSelect = "/mail/employee/info";
 const infoList = "/mail/employee/list";
 const infoUpload = "/mail/employee/importemployee";
 const jobTypeList = "/mail/employee/level";
+const infoByNet = "/statistics/personnelnumber";
 
 //视频资源登记
 const videoAddOrEdit = "/mail/video/savevideo";
@@ -185,6 +186,7 @@ const cheList = "/whpml/list";
 const wqyOption = "/whpqy/operation";
 const wqyImport = "/whpqy/importmd";
 const wqyList = "/whpqy/list";
+const wqyNet = "/mail/workstation/expresslist";
 
 //寄递品牌管理-寄递企业
 const jdqList = "/jdqynl/list";
@@ -274,6 +276,7 @@ export default {
   infoList,
   infoUpload,
   jobTypeList,
+  infoByNet,
 
   videoAddOrEdit,
   videoDel,
@@ -347,6 +350,7 @@ export default {
   wqyOption,
   wqyImport,
   wqyList,
+  wqyNet,
 
   jdqList,
   jdqOption,

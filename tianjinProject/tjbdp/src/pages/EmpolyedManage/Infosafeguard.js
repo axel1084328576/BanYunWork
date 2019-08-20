@@ -20,6 +20,7 @@ import InfoHighSearch from "../../components/EmpolyedManage/HighSearch";
 import InfoAddSearch from "../../components/EmpolyedManage/AddModal";
 import InfoEditSearch from "../../components/EmpolyedManage/EditModal";
 import ImportModal from "../../components/EmpolyedManage/ImportModal";
+import NetModal from "@/components/EmpolyedManage/NetModal"
 import styles from "./Infosafeguard.less";
 import SelectExpree from '../../components/EmpolyedManage/SelectExpree';
 
@@ -53,6 +54,7 @@ export default class Infosafeguard extends Component {
     nameValue: "",
     infoVisible: false,
     editVisible: false,
+    modalVisible: false,
     selectedRows: "",
     selectedRowKeys: [],
     dataSource: [],
@@ -112,6 +114,10 @@ export default class Infosafeguard extends Component {
       render: (text, record) => {
         return (
           <span>
+            {record.worklist.length > 0 ? <a href="javascript:" onClick={() => {
+              this.showNetModal(record);
+            }}>所属网点</a> : null}
+            {record.worklist.length > 0 ? < Divider type="vertical" /> : null}
             {this.props.controlList.emp_mod ? <a href="javascript:" onClick={() => {
               this.showEditModal(record);
             }}>修改</a> : null}
@@ -294,6 +300,15 @@ export default class Infosafeguard extends Component {
         console.log(res)
       }
     });
+  }
+
+
+  showNetModal(record) {
+    this.setState({ modalVisible: true, rowData: record })
+  }
+
+  setModalVisible = (value) => {
+    this.setState({ modalVisible: value })
   }
 
   handleImportVisible = () => {
@@ -554,7 +569,7 @@ export default class Infosafeguard extends Component {
   };
 
   render() {
-    const { columns, showSearch, infoVisible, selectedRows, rowData, selectedRowKeys } = this.state;
+    const { columns, showSearch, infoVisible, selectedRows, rowData, selectedRowKeys, modalVisible } = this.state;
     const { infoLoading, infoSafeList, delLoading, pageSize, total } = this.props;
     const { getFieldDecorator } = this.props.form;
     const FormItem = Form.Item;
@@ -609,7 +624,7 @@ export default class Infosafeguard extends Component {
     const companyList = this.props.companyList.map((item) => {
       return <Option key={item.compNo} value={item.compNo}>{item.companyName}</Option>;
     });
-    
+
     const normalSearch = (
       <div className={styles.searchRow}>
         <Form layout="inline">
@@ -858,6 +873,8 @@ export default class Infosafeguard extends Component {
             };
           }}
         />
+
+        {modalVisible ? <NetModal modalVisible={modalVisible} setModalVisible={this.setModalVisible} data={this.state.rowData} /> : null}
       </Card>
     );
   }

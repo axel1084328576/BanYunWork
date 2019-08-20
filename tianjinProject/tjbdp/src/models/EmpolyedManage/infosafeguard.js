@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { getInfoSafe, addOrEditInfo, delInfo, listInfo, selectInfo, uploadInfo, getJobType } from '../../services/EmpolyedManage/infosafeguard';
+import { getInfoSafe, addOrEditInfo, delInfo, listInfo, selectInfo, uploadInfo, getJobType, netInfo } from '../../services/EmpolyedManage/infosafeguard';
 import { getUserPage } from "../../services/public";
 import { uploadReplay } from "../../services/SecurityMachine/replayCheck";
 
@@ -9,6 +9,7 @@ export default {
   state: {
     infoSafeList: [],
     jobTypeList: [],
+    netInfo: '',
     info: {},
     page: '',
     pageSize: '',
@@ -17,6 +18,20 @@ export default {
   },
 
   effects: {
+
+    *getNetInfo({ payload, callback }, { call, put }) {
+      const response = yield call(netInfo, payload);
+      if (response != undefined) {
+
+        yield put({
+          type: 'netInfo',
+          payload: response,
+        });
+
+      } else {
+        message.success('获取数据失败');
+      }
+    },
 
     //动态获取岗位类型
     *getJobType({ payload, callback }, { call, put }) {
@@ -140,6 +155,15 @@ export default {
   },
 
   reducers: {
+
+    // 网点信息
+    // infoByNet
+    netInfo(state, { payload }) {
+      return {
+        ...state,
+        netInfo: payload
+      }
+    },
 
     //岗位类型列表
     typeList(state, { payload }) {

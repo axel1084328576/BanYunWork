@@ -3,7 +3,7 @@ import request from '@/utils/request';
 import apiConfig from '@/utils/apiConfig';
 import {toQueryPair,toQueryString} from '@/utils/queryParams';
 
-const {host,infoAddOrEdit, infoDel, infoSelect, infoList,infoUpload,jobTypeList}=apiConfig;
+const {host,infoAddOrEdit, infoDel, infoSelect, infoList,infoUpload,jobTypeList,infoByNet}=apiConfig;
 
 export async function getInfoSafe() {
   return request('/api/InfoSafe/list');
@@ -46,6 +46,15 @@ export async function uploadInfo(params) {
 //获取动态岗位类型
 export async function getJobType(params) {
   return request(`${host}${jobTypeList}?${toQueryString(params)}`,{
+    method: 'POST',
+    body: params,
+  });
+}
+
+
+//根据网点获取信息
+export async function netInfo(params) {
+  return request(`${host}${infoByNet}?${toQueryString(params)}`,{
     method: 'POST',
     body: params,
   });
