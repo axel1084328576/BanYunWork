@@ -45,12 +45,13 @@ export default class DeliveryEnterprise extends Component {
         key: "compNa",
         // width:100,
       },
-      {
-        title: "网点代码",
-        dataIndex: "statCode",
-        key: "statCode",
-        // width:100,
-      }, {
+      // {
+      //   title: "网点代码",
+      //   dataIndex: "statCode",
+      //   key: "statCode",
+      //   // width:100,
+      // },
+       {
         title: "网点名称",
         dataIndex: "statName",
         key: "statName",
@@ -66,9 +67,9 @@ export default class DeliveryEnterprise extends Component {
         key: "address",
         // width:100,
       }, {
-        title: "所属行政区代码",
-        dataIndex: "administrativeCode",
-        key: "administrativeCode",
+        title: "所属行政区名称",
+        dataIndex: "administrativeName",
+        key: "administrativeName",
         // width:100,
       }, {
         title: "网点类型",
@@ -384,6 +385,26 @@ export default class DeliveryEnterprise extends Component {
   render() {
     const { columns, selectedRowKeys, editVisible, rowData, addVisible, setImportModal, importVisible, mapVisible, mapData } = this.state;
     const { list, pageSize, total, loading, netList } = this.props;
+
+
+    let showList = [];
+
+    list.forEach(element => {
+
+      let type = '';
+      for (let i in netList) {
+        if (netList[i].networkType == element.networkType) {
+          type = netList[i].name;
+          break;
+        }
+      }
+      let temp = {
+        ...element,
+        networkType: type
+      }
+      showList.push(temp);
+    });
+
     const { getFieldDecorator } = this.props.form;
     // console.log("this.props.cheList",this.props.cheList);
     const formItemLayout = {
@@ -499,7 +520,7 @@ export default class DeliveryEnterprise extends Component {
                   )}
                 </Form.Item>
               </Col>
-              <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+              {/* <Col sm={{ span: 24 }} lg={{ span: 6 }}>
                 <Form.Item
                   label="网点代码"
                   {...formItemLayout}
@@ -511,7 +532,7 @@ export default class DeliveryEnterprise extends Component {
                     <Input placeholder="请输入网点代码" className={styles.formItemWidth} />
                   )}
                 </Form.Item>
-              </Col>
+              </Col> */}
               <Col sm={{ span: 24 }} lg={{ span: 6 }}>
                 <Form.Item
                   label="网点名称"
@@ -677,7 +698,7 @@ export default class DeliveryEnterprise extends Component {
         <ImportModal importVisible={importVisible} setImportModal={this.setImportModal} dispatch={this.props.dispatch} getSearch={this.getSearch} setSelectedRowKeys={this.setSelectedRowKeys} />
         {normalSearch}
         <Table
-          dataSource={list}
+          dataSource={showList}
           columns={columns}
           bordered
           rowSelection={rowSelection}

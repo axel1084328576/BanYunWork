@@ -65,82 +65,86 @@ export default class Infosafeguard extends Component {
     expVisible: false,
     stationId: null,
     compNo: null,
-    columns: [{
-      title: "从业人员编号",
-      dataIndex: "emplNo",
-      key: "emplNo",
-      // width:100,
-    }, {
-      title: "快递企业代码",
-      dataIndex: "expressNo",
-      key: "expressNo",
-      // width:120,
-    }, {
-      title: "网点编码",
-      dataIndex: "networkNo",
-      key: "networkNo",
-      // width:100,
-    }, {
-      title: "姓名",
-      dataIndex: "emplName",
-      key: "emplName",
-      // width:140,
-    }, {
-      title: "电话",
-      dataIndex: "mobile",
-      key: "mobile",
-      // width:140,
-    }, {
-      title: "居住地址",
-      dataIndex: "address",
-      key: "address",
-      // width:140,
-    }, {
-      title: "证件号码",
-      dataIndex: "idcard",
-      key: "idcard",
-      // width:100,
-    }, {
-      title: "岗位类型",
-      dataIndex: "level",
-      key: "level",
-      // width:120,
-    }, {
-      title: "",
-      dataIndex: "operation",
-      key: "operation",
-      // fixed: "right",
-      // width:110,
-      render: (text, record) => {
-        return (
-          <span>
-            {record.worklist.length > 0 ? <a href="javascript:" onClick={() => {
-              this.showNetModal(record);
-            }}>所属网点</a> : null}
-            {record.worklist.length > 0 ? < Divider type="vertical" /> : null}
-            {this.props.controlList.emp_mod ? <a href="javascript:" onClick={() => {
-              this.showEditModal(record);
-            }}>修改</a> : null}
-            {this.props.controlList.emp_mod && this.props.controlList.emp_del ? <Divider type="vertical" /> : null}
-            {
-              this.props.controlList.emp_del ?
-                (this.props.infoSafeList.length >= 1
-                  ? (
-                    <Popconfirm
-                      title="是否要删除选中的用户信息?"
-                      placement="bottomRight"
-                      onConfirm={() => {
-                        this.rowDel(record);
-                      }}
-                    >
-                      <a href="javascript:;" style={{ color: "#f5222d" }}>删除</a>
-                    </Popconfirm>
-                  ) : null) : null
-            }
-          </span>
-        );
-      }
-    }]
+    columns: [
+      //   {
+      //   title: "从业人员编号",
+      //   dataIndex: "emplNo",
+      //   key: "emplNo",
+      //   // width:100,
+      // },
+      {
+        title: "快递企业代码",
+        dataIndex: "expressNo",
+        key: "expressNo",
+        // width:120,
+      },
+      // {
+      //   title: "网点编码",
+      //   dataIndex: "networkNo",
+      //   key: "networkNo",
+      //   // width:100,
+      // }, 
+      {
+        title: "姓名",
+        dataIndex: "emplName",
+        key: "emplName",
+        // width:140,
+      }, {
+        title: "电话",
+        dataIndex: "mobile",
+        key: "mobile",
+        // width:140,
+      }, {
+        title: "居住地址",
+        dataIndex: "address",
+        key: "address",
+        // width:140,
+      }, {
+        title: "证件号码",
+        dataIndex: "idcard",
+        key: "idcard",
+        // width:100,
+      }, {
+        title: "岗位类型",
+        dataIndex: "level",
+        key: "level",
+        // width:120,
+      }, {
+        title: "",
+        dataIndex: "operation",
+        key: "operation",
+        // fixed: "right",
+        // width:110,
+        render: (text, record) => {
+          return (
+            <span>
+              {record.worklist.length > 0 ? <a href="javascript:" onClick={() => {
+                this.showNetModal(record);
+              }}>所属网点</a> : null}
+              {record.worklist.length > 0 ? < Divider type="vertical" /> : null}
+              {this.props.controlList.emp_mod ? <a href="javascript:" onClick={() => {
+                this.showEditModal(record);
+              }}>修改</a> : null}
+              {this.props.controlList.emp_mod && this.props.controlList.emp_del ? <Divider type="vertical" /> : null}
+              {
+                this.props.controlList.emp_del ?
+                  (this.props.infoSafeList.length >= 1
+                    ? (
+                      <Popconfirm
+                        title="是否要删除选中的用户信息?"
+                        placement="bottomRight"
+                        onConfirm={() => {
+                          this.rowDel(record);
+                        }}
+                      >
+                        <a href="javascript:;" style={{ color: "#f5222d" }}>删除</a>
+                      </Popconfirm>
+                    ) : null) : null
+              }
+            </span>
+          );
+        }
+      }]
     // columns: [{
     //   title: "职员ID",
     //   dataIndex: "emplNo",
@@ -575,13 +579,28 @@ export default class Infosafeguard extends Component {
     const FormItem = Form.Item;
     const Option = Select.Option;
 
-    this.props.infoSafeList.map((item) => {
+    infoSafeList.map((item) => {
       item.departureTime = this.timestampToTime(item.departureTime)
     });
 
-    this.props.infoSafeList.map((item) => {
+    infoSafeList.map((item) => {
       item.entryTime = this.timestampToTime(item.entryTime)
     });
+
+    const showList = infoSafeList.map((val) => {
+      let level = val.level
+      for (let i in this.props.jobTypeList) {
+        if (this.props.jobTypeList[i].id == val.level) {
+          level = this.props.jobTypeList[i].type;
+          break;
+        }
+      }
+      let temp = {
+        ...val,
+        level: level
+      }
+      return temp;
+    })
 
     const children = this.props.expressList.map((item) => {
       return <Option key={item.sid} value={item.sid}>{item.statName}</Option>;
@@ -618,7 +637,7 @@ export default class Infosafeguard extends Component {
 
     //岗位类型
     const jobTypeList = this.props.jobTypeList.map((item) => {
-      return <Option key={item} value={item}>{item}</Option>;
+      return <Option key={item.id} value={item.id}>{item.type}</Option>;
     });
 
     const companyList = this.props.companyList.map((item) => {
@@ -629,7 +648,7 @@ export default class Infosafeguard extends Component {
       <div className={styles.searchRow}>
         <Form layout="inline">
           <Row>
-            <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+            {/* <Col sm={{ span: 24 }} lg={{ span: 6 }}>
               <FormItem
                 label="从业人员编号"
                 {...formItemLayout}
@@ -647,7 +666,7 @@ export default class Infosafeguard extends Component {
                   />
                 )}
               </FormItem>
-            </Col>
+            </Col> */}
             <Col sm={{ span: 24 }} lg={{ span: 6 }}>
               <FormItem
                 label="快递企业代码"
@@ -696,7 +715,7 @@ export default class Infosafeguard extends Component {
             </Col>
           </Row>
           {this.state.openHighSearch ? <Row>
-            <Col sm={{ span: 24 }} lg={{ span: 6 }}>
+            {/* <Col sm={{ span: 24 }} lg={{ span: 6 }}>
               <FormItem
                 {...formItemLayout}
                 label="网点编码"
@@ -715,7 +734,7 @@ export default class Infosafeguard extends Component {
                   />
                 )}
               </FormItem>
-            </Col>
+            </Col> */}
             <Col sm={{ span: 24 }} lg={{ span: 6 }}>
               <FormItem
                 {...formItemLayout}
@@ -844,7 +863,7 @@ export default class Infosafeguard extends Component {
         }
         {normalSearch}
         <Table
-          dataSource={infoSafeList}
+          dataSource={showList}
           columns={columns}
           bordered
           rowSelection={rowSelection}

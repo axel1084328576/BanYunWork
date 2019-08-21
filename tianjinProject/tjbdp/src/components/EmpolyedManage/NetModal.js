@@ -4,10 +4,12 @@ import echarts from 'echarts';
 import { connect } from 'dva';
 import { Modal, Col, Statistic, Row, Table, Card } from 'antd';
 
-@connect(({ infoSafeGuard }) => {
+@connect(({ infoSafeGuard, networkManage }) => {
     const { netInfo } = infoSafeGuard;
+    const { netList } = networkManage;
     return {
-        netInfo: netInfo
+        netInfo: netInfo,
+        netList: netList
     }
 })
 
@@ -15,7 +17,6 @@ import { Modal, Col, Statistic, Row, Table, Card } from 'antd';
 export default class NetModal extends React.Component {
     constructor(props) {
         super(props)
-
         this.state = {
             visible: props.modalVisible,
             carNumber: 34,
@@ -74,6 +75,12 @@ export default class NetModal extends React.Component {
             payload: {
                 compNo: this.props.data.worklist[0].compNo,
                 networkNo: this.props.data.worklist[0].statCode,
+                token: sessionStorage.getItem('sys-token'),
+            }
+        })
+        dispatch({
+            type: "networkManage/sortNet",
+            payload: {
                 token: sessionStorage.getItem('sys-token'),
             }
         })
@@ -171,6 +178,25 @@ export default class NetModal extends React.Component {
     }
 
     render() {
+        let showList = [];
+        let netList = this.props.netList;
+        this.state.data.forEach(element => {
+            let type = '';
+            for (let i in netList) {
+                if (netList[i].networkType == element.networkType) {
+                    type = netList[i].name;
+                    break;
+                }
+            }
+            let temp = {
+                ...element,
+                networkType: type
+            }
+            showList.push(temp);
+        });
+
+        console.log(this.props)
+
         return (
             <div>
                 <Modal
@@ -182,19 +208,25 @@ export default class NetModal extends React.Component {
 
                     <Table
                         columns={this.state.columns}
-                        dataSource={this.state.data}
+                        dataSource={showList}
                         pagination={false}
                         scroll={{ x: '100%' }} />
                     <Card>
                         <Row>
                             <Col span={6} offset={2}>
-                                <Statistic title="网点人员总数" value={this.props.netInfo.personall} suffix="/人" />
+                                <Statistic title="网点人数" value={this.props.netInfo.networkNumber} suffix="/人" />
                             </Col>
                             <Col span={6} offset={2}>
-                                <Statistic title="网点车辆总数" value={this.state.carNumber} suffix="/辆" />
+                                <Statistic title="品牌人数" value={this.props.netInfo.brandNumber} suffix="/人" />
                             </Col>
                             <Col span={6} offset={2}>
-                                <Statistic title="安检机总数" value={this.state.ajjNumber} suffix="/台" />
+                                <Statistic title="总人数" value={this.props.netInfo.personall} suffix="/人" />
+                            </Col>
+                            <Col span={6} offset={2}>
+                                <Statistic title="网点车辆数" value={this.state.carNumber} suffix="/辆" />
+                            </Col>
+                            <Col span={6} offset={2}>
+                                <Statistic title="安检机数" value={this.state.ajjNumber} suffix="/台" />
                             </Col>
                         </Row>
                     </Card>
