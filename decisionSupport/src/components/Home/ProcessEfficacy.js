@@ -1,86 +1,112 @@
-
 import React from 'react';
 import echarts from 'echarts';
-import { Row, Col } from 'antd'
+import { Row, Col } from 'antd';
 import Style from './ProcessEfficacy.css';
-
+import HomeStyle from './HomeGeneral.less';
 // 行政处理效能
 
 class ProcessEfficacy extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+  constructor(props) {
+    super(props);
+    const { value } = this.props;
+    this.state = {
+      data: value,
+    };
+  }
 
-        }
-    }
+  componentDidMount() {
+    this.initOption();
+  }
 
-    componentDidMount() {
-        this.initOption();
-    }
+  initOption() {
+    const showData = this.state.data;
+    let legendData = [];
 
-    initOption() {
+    showData.forEach((item, index) => {
+      legendData.push(item.name);
+    });
 
-        const showData = [
-            { value: 10, name: 'rose1' },
-            { value: 5, name: 'rose2' },
-            { value: 15, name: 'rose3' },
-            { value: 25, name: 'rose4' },
-            { value: 20, name: 'rose5' },
-            { value: 35, name: 'rose6' },
-            { value: 30, name: 'rose7' },
-            { value: 40, name: 'rose8' }
-        ];
-        const legendData = ['rose1', 'rose2', 'rose3', 'rose4', 'rose5', 'rose6', 'rose7', 'rose8']
+    const myCharts = echarts.init(document.getElementById('PEoption'));
+    myCharts.setOption({
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)',
+      },
+      // legend: {
+      //     data: legendData
+      // },
+      title: {
+        text: '2212',
+        textStyle: {
+          fontSize: 20,
+          color: 'rgba(61, 100, 228, 0.88)',
+        },
+        subtext: '案件总量',
+        subtextStyle: {
+          fontSize: 14,
+          color: 'rgba(61, 80, 133, 0.89)',
+        },
+        textAlign: 'center',
+        textVerticalAlign: 'center',
+        top: '45%',
+        left: '50%',
+      },
+      grid: {
+        bottom: '15%',
+        top: '10%',
+        left: '10%',
+        right: '10%',
+      },
+      // calculable: true,
+      series: [
+        {
+          name: '行政处理效能',
+          type: 'pie',
+          radius: [40, 60],
+          center: ['50%', '50%'],
+          roseType: 'area',
+          label: {
+            show: true,
+            formatter: '{d}%\n{nameStyle|{b}}',
+            // (params) => {
 
-        const myCharts = echarts.init(document.getElementById('PEoption'));
-        myCharts.setOption({
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            //     return '{c}%\n{nameStyle|{a}}'
+            // }
+            rich: {
+              nameStyle: {
+                color: 'rgba(61, 80, 133, 0.89)',
+                fontSize: 10,
+              },
             },
-            legend: {
-                data: legendData
+          },
+          itemStyle: {
+            borderWidth: 5,
+            borderColor: 'rgba(61, 80, 133, 0)',
+          },
+          lableLine: {
+            normal: {
+              show: false,
             },
-            calculable: true,
-            series: [
-                {
-                    name: '行政处理效能',
-                    type: 'pie',
-                    radius: [20, 80],
-                    center: ['50%', '60%'],
-                    roseType: 'area',
-                    label: {
-                        normal: {
-                            show: false
-                        },
-                        emphasis: {
-                            show: true
-                        }
-                    },
-                    lableLine: {
-                        normal: {
-                            show: false
-                        },
-                        emphasis: {
-                            show: true
-                        }
-                    },
-                    data: showData
-                }
-            ]
-        })
-    }
+            emphasis: {
+              show: true,
+            },
+          },
+          data: showData,
+        },
+      ],
+    });
+  }
 
-    render() {
-        return (
-            <div style={{ height: '100%' }}>
-                <div className={Style['component-title-background']}>
-                    <Col span={12} className={Style['component-title']}>行政处理效能</Col>
-                </div>
-                <div id='PEoption' style={{ height: '80%' }} />
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className={HomeStyle['background-image-normal']}>
+        <div className={HomeStyle['component-title']}>
+          <span className={HomeStyle['component-title-name']}>行政处理效能</span>
+        </div>
+        <div id="PEoption" style={{ height: '85%' }} />
+      </div>
+    );
+  }
 }
 
 export default ProcessEfficacy;

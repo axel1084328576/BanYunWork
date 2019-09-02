@@ -1,15 +1,14 @@
-
-import React from 'react'
-import echarts from 'echarts'
-import geoJson from 'echarts/map/json/china.json'
-
+import React from 'react';
+import echarts from 'echarts';
+import geoJson from 'echarts/map/json/china.json';
+import HomeStyle from './HomeGeneral.less';
 // 大屏中间地图组件
 class MainMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mapData: props.value
-    }
+      mapData: props.value,
+    };
   }
 
   componentDidMount() {
@@ -28,34 +27,34 @@ class MainMap extends React.Component {
         value: Math.random(),
         // height: 1,
         itemStyle: {
-          opacity: 0.8,
-          borderWidth: 1
-        }
+          opacity: 1,
+          borderWidth: 1,
+        },
       };
     });
 
     const myChart = echarts.init(document.getElementById('mainMap'));
     myChart.setOption({
       tooltip: {
-        show: false,       // 不显示提示标签
-        formatter: '{b}',      // 提示标签格式
-        backgroundColor: "#ff7f50",// 提示标签背景颜色
-        textStyle: { color: "#fff" } // 提示标签字体颜色
+        show: false, // 不显示提示标签
+        formatter: '{b}', // 提示标签格式
+        backgroundColor: '#ff7f50', // 提示标签背景颜色
+        textStyle: { color: '#fff' }, // 提示标签字体颜色
       },
       visualMap: {
         show: false,
         min: 0,
         max: 1,
         inRange: {
-          color: ['#313695', '#4575b4']
-        }
+          color: ['#313695', '#4575b4'],
+        },
       },
       grid: {
         left: '10%',
         right: '10%',
         top: '2%',
         bottom: '10%',
-        containLabel: true
+        containLabel: true,
       },
       series: [
         {
@@ -68,23 +67,21 @@ class MainMap extends React.Component {
             // 平移灵敏度 0为不平移
             panSensitivity: 0,
             beta: 0,
-            alpha: 60,
+            alpha: 50,
             minBeta: 0,
             maxBeta: 0,
-            minAlpha: 50,
-            maxAlpha: 70
+            minAlpha: 0,
+            maxAlpha: 90,
           },
-          regionHeight: 2,
-          data: regions
-        }
+          regionHeight: 4,
+          data: regions,
+        },
       ],
-    })
+    });
   }
 
   render() {
-    return (
-      <div id="mainMap" style={{ height: '100%' }} />
-    );
+    return <div id="mainMap" style={{ height: '100%' }} />;
   }
 }
 

@@ -1,25 +1,47 @@
-
-.ftips-name{
-    font-size: 20px;
-    font-weight: 500;
-    color:rgb(196, 142, 80)
+.ftips-name {
+  font-size: 20px;
+  font-weight: 500;
+  color: rgb(196, 142, 80)
 }
 
-.ftips-value{
-    font-size: 28px;
-    font-weight: 400;
-    color:rgb(67, 109, 224)
+.ftips-value {
+  font-size: 28px;
+  font-weight: 400;
+  color: rgb(67, 109, 224)
 }
 
-.component-title{
-    font-size: 16px;
-    color:rgb(255, 255, 255)
+.component-title {
+  font-size: 16px;
+  color: rgb(255, 255, 255)
 }
 
-.component-title-background{
-    background-color:rgba(67, 109, 224,0.8);
-    overflow: hidden;
+.component-title-background {
+  background-color: rgba(67, 109, 224, 0.8);
+  overflow: hidden;
 }
-.float-right-el{
-     float: right
+
+.float-right-el {
+  float: right
+}
+
+.loading {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  margin-bottom: 20px;
+  padding: 50px 50px;
+  margin: 20px 0;
+  height: auto;
+}
+
+.block-layout {
+  padding: 10px 10px 0px 10px
+}
+
+.block-layout-left {
+  padding: 10px 0px 0px 28px
+}
+
+.block-layout-right {
+  padding: 10px 28px 0px 0px
 }
